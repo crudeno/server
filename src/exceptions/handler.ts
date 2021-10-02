@@ -1,4 +1,4 @@
-import { RouterContext } from '../deps.ts'
+import { RouterContext } from '../../deps.ts'
 import Bag from './bag.ts'
 import Exception from './exception.ts'
 

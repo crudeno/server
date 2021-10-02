@@ -1,18 +1,21 @@
+import Config from './config.ts'
 import CreateController from './controllers/rest/create.controller.ts'
 import DeleteController from './controllers/rest/delete.controller.ts'
 import ReadController from './controllers/rest/read.controller.ts'
 import UpdateController from './controllers/rest/update.controller.ts'
-import { Context, Router as OakRouter } from './deps.ts'
+import { Context, Router as OakRouter } from '../deps.ts'
 import Handler from './exceptions/handler.ts'
 
-export const graphql = (router: OakRouter) => (path: string): OakRouter => router.post(
+const trim = (path: string): string => `${`${path}`.replace(/^\/*/, '')}`
+
+export const graphql = (path: string): OakRouter => (new OakRouter()).post(
   path,
   async (ctx: Context): Promise<void> => {
     ctx.response.body = 'GraphQL'
   },
 )
 
-export const rest = (router: OakRouter) => (path: string): OakRouter => router
+export const rest = (path: string): OakRouter => (new OakRouter())
   .post(path, Handler, CreateController)
   .get(path, Handler, ReadController)
   .get(`${path}/:id`, Handler, ReadController)
@@ -32,3 +35,18 @@ export const notFound = (router: OakRouter) => router.all(
     }
   })
 
+export const make = ({ path, type }: Config): OakRouter => {
+  let router: OakRouter
+  switch (type) {
+    case 'graphql':
+      router = graphql(`/${trim(path || 'graphql')}`)
+      break
+
+    case 'rest':
+    default:
+      router = rest(`/${trim(path || '')}`)
+      break
+  }
+
+  return notFound(router)
+}

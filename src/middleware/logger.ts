@@ -1,4 +1,4 @@
-import { Context, log } from '../deps.ts'
+import { Context, log } from '../../deps.ts'
 
 export default () => async (
   ctx: Context,

@@ -1,4 +1,4 @@
-import { RouterContext } from '../../deps.ts'
+import { RouterContext } from '../../../deps.ts'
 import Controller from './controller.ts'
 
 const createController: Controller = async (
