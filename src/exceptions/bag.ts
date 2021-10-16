@@ -1,10 +1,10 @@
-import Exception from './exception.ts'
+import Exception from "./exception.ts";
 
 export default class Bag extends Exception {
-  errors: Exception[]
+  errors: Exception[];
 
   constructor(errors: Exception[]) {
-    super()
-    this.errors = errors
+    super();
+    this.errors = errors;
   }
 }

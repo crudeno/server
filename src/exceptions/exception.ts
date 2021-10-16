@@ -1,3 +1,3 @@
 export default class Exception extends Error {
-  status = 500
+  status = 500;
 }
